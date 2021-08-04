@@ -13,4 +13,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script:  cd /home/savyjs/install-demo/front && git pull origin master && pm2 stop demoFront && yarn generate && pm2 start demoFront
+        script:  cd /home/savyjs/install-demo/front && git pull origin master && pm2 stop demoFront && yarn build && pm2 start demoFront
