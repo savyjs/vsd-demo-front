@@ -1,32 +1,31 @@
 import colors from 'vuetify/es5/util/colors'
+
 const _ = require('lodash');
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - front',
+    titleTemplate: '%s - VSD',
     title: 'front',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''},
+      {name: 'format-detection', content: 'telephone=no'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -43,7 +42,22 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    ['vuetify-strapi-dashboard']
+    ['nuxt-i18n',
+      {
+        vueI18nLoader: true,
+        locales: [
+          {code: 'en', iso: 'en-US', file: 'en.js', dir: 'ltr'},
+          {code: 'fa', iso: 'fa-IR', file: 'fa.js', dir: 'rtl'}
+        ],
+        rtl: false,
+        lazy: true,
+        langDir: "locale/",
+        defaultLocale: 'en'
+      }
+    ],
+    ['vuetify-strapi-dashboard', {
+      menu: require('./modules/demo/menu').default
+    }]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -54,7 +68,6 @@ export default {
         _scheme: 'local',
         endpoints: {
           login: {url: _.get(process, 'env.LOGIN_URL', '/auth/local'), method: 'post', propertyName: 'jwt'},
-          logout: {url: '/auth/logout', method: 'post'},
           user: {url: '/users/me', method: 'get'}
         },
         tokenRequired: true,
@@ -64,7 +77,7 @@ export default {
     },
     redirect: {
       login: '/admin/auth',
-      logout: '/admin/system/profile/logout',
+      logout: '/admin/auth',
       callback: '/admin',
       home: '/admin'
     },
@@ -92,6 +105,5 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }
